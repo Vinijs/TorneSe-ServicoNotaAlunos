@@ -1,5 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.Domain\TorneSe.ServicoNotaAlunos.Domain.csproj" />
+    <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.Application\TorneSe.ServicoNotaAlunos.Application.csproj" />
+    <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.Data\TorneSe.ServicoNotaAlunos.Data.csproj" />
+    <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.MessageBus\TorneSe.ServicoNotaAlunos.MessageBus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TorneSe.ServicoNotaAlunos.Domain.ValueObjects;
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
-public class Usuario: Entidade
+public class Usuario: Entidade, IRaizAgregacao
 {
     public Usuario(string nome, string documentoIdentificacao, DateTime dataNascimento,
      bool ativo, Telefone telefoneContato, string email, bool administrativo, DateTime dataCadastro)

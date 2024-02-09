@@ -1,10 +1,10 @@
 namespace TorneSe.ServicoNotaAlunos.Worker;
 
-public class Worker : BackgroundService
+public class ServicoNotaAlunoWorker : BackgroundService
 {
-    private readonly ILogger<Worker> _logger;
+    private readonly ILogger<ServicoNotaAlunoWorker> _logger;
 
-    public Worker(ILogger<Worker> logger)
+    public ServicoNotaAlunoWorker(ILogger<ServicoNotaAlunoWorker> logger)
     {
         _logger = logger;
     }

@@ -1,10 +1,16 @@
 using TorneSe.ServicoNotaAlunos.Worker;
+using TorneSe.ServicoNotaAlunos.IOC;
 
 IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration((hostContext, config) =>
+    {
+        config.AddEnvironmentVariables();
+    })
     .ConfigureServices(services =>
     {
-        services.AddHostedService<Worker>();
-        services.AddHostedService<WorkerExemplo>();
+        services.ConfigurarInjecaoDependencia()
+        .AddHostedService<ServicoNotaAlunoWorker>();
+        // .AddHostedService<WorkerExemplo>();
     })
     .Build();
 

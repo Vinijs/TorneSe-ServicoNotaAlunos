@@ -1,5 +1,10 @@
 # Comando para listar os projetos
  - dotnet new --list
+
+ ## Instalando pacotes Nuget apontando a origem
+ ``` bash
+ - dotnet add package Microsoft.Extensions.DependencyInjection --source https://api.nuget.org/v3/index.json 
+ ```
  
 
 # Comando para adcionar projetos a solução vazia
