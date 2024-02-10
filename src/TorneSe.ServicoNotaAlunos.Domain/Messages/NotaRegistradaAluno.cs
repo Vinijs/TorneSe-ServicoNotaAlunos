@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
+using TorneSe.ServicoNotaAlunos.Domain.Validations;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Messages;
 public class NotaRegistradaAluno : Mensagem
@@ -20,6 +21,7 @@ public class NotaRegistradaAluno : Mensagem
     
     public override bool MensagemEstaValida()
     {
-        return base.MensagemEstaValida();
+        // Validacoes = RegistrarNotaAlunoValidacao.Instance.Validate(this);
+        return Validacoes.IsValid;
     }
 }

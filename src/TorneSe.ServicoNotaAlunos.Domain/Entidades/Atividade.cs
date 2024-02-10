@@ -7,9 +7,10 @@ using TorneSe.ServicoNotaAlunos.Domain.Enums;
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 public class Atividade : Entidade
 {
-    public Atividade(string descricao,TipoAtividade tipoAtividade, DateTime dataAtividade,
+    public Atividade(int atividadeId, string descricao,TipoAtividade tipoAtividade, DateTime dataAtividade,
                      DateTime dataCadastro, bool possuiRetentativa)
     {
+        Id = atividadeId;
         Descricao = descricao;
         TipoAtividade = tipoAtividade;
         DataAtividade = dataAtividade;

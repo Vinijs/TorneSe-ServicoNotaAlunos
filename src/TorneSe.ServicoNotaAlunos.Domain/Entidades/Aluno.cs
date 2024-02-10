@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 public class Aluno : Entidade
 {
-    public Aluno(string nomeAbreviado, string emailInterno, int usuarioId,
+    public Aluno(int alunoId, string nomeAbreviado, string emailInterno, int usuarioId,
                  DateTime dataCadastro)
     {
+        Id = alunoId;
         NomeAbreviado = nomeAbreviado;
         EmailInterno = emailInterno;
         UsuarioId = usuarioId;

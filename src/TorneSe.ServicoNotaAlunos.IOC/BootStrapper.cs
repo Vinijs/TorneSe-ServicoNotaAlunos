@@ -8,7 +8,8 @@ using TorneSe.ServicoNotaAlunos.Application.Services;
 using TorneSe.ServicoNotaAlunos.Data.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
-// using TorneSe.ServicoNotaAlunos.Domain.Services;
+using TorneSe.ServicoNotaAlunos.Domain.Services;
+using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 
 namespace TorneSe.ServicoNotaAlunos.IOC;
@@ -19,6 +20,8 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
             RegistrarServicos(services);
             RegistrarContextos(services);
             RegistrarRepositorios(services);
+            RegistrarFilas(services);
+            RegistrarContextoNotificacao(services);
             return services;
         }
 
@@ -43,5 +46,10 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         {
             services.AddScoped<ILancarNotaAlunoFakeClient, LancarNotaAlunoFakeClient>();
         }
+
+        private static void RegistrarContextoNotificacao(IServiceCollection services)
+        {
+            services.AddScoped<ContextoNotificacao>();
+        } 
 
     }
