@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
+using TorneSe.ServicoNotaAlunos.Domain.Utils;
 
 namespace TorneSe.ServicoNotaAlunos.Worker;
 
@@ -21,7 +22,7 @@ public class ServicoNotaAlunoWorker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-           _logger.LogInformation("Iniciando o serviço de notas");
+           _logger.LogInformation(Constantes.MensagensAplicacao.INICIANDO_SERVICO);
            using var scope = _serviceScopeFactory.CreateScope();
            var servicoNotaAlunoApp = scope.ServiceProvider.GetRequiredService<IServicoAplicacaoNotaAluno>();
            var clienteMensagens = scope.ServiceProvider.GetRequiredService<ILancarNotaAlunoFakeClient>();
@@ -38,7 +39,7 @@ public class ServicoNotaAlunoWorker : BackgroundService
 
            if(mensagem is null)
            {
-            _logger.LogInformation("Não possui mensagens a ser processadas na fila...");
+            _logger.LogInformation(Constantes.MensagensAplicacao.SEM_MENSAGEM_NA_FILA);
             continue;
            }
 

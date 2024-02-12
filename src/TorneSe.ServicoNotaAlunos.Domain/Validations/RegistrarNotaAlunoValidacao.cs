@@ -18,7 +18,7 @@ public class RegistrarNotaAlunoValidacao : AbstractValidator<RegistrarNotaAluno>
 
     public static string CorrelationIdMsgErro => "O id da transação está inválida";
 
-    public static string ValorNotaMsgErro => "O valor da nota não pode ser inferior a 0";
+    public static string ValorNotaMsgErro => "O valor da nota não pode ser inferior a zero";
 
 
 

@@ -11,6 +11,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
+using TorneSe.ServicoNotaAlunos.Data.Context;
 
 namespace TorneSe.ServicoNotaAlunos.IOC;
     public static class BootStrapper
@@ -33,7 +34,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
 
         private static void RegistrarContextos(IServiceCollection services)
         {
-            
+            services.AddScoped<FakeDbContexto>();
         }
 
         private static void RegistrarRepositorios(IServiceCollection services)

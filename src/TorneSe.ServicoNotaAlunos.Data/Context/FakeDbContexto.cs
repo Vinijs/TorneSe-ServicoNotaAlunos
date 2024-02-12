@@ -26,6 +26,8 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
 
         Aluno aluno = new(1234, "Raphael", "raphael@gmail.com", 1212, DateTime.Now);
 
+        alunos.Add(aluno);
+
         return alunos;
     }
 
@@ -34,6 +36,8 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
         var professores = new List<Professor>();
 
         Professor professor = new(1282727, "Danilo", "danilo.s@gmail.com", true, false, 1212, DateTime.Now);
+
+        professores.Add(professor);
 
         return professores; 
     }
