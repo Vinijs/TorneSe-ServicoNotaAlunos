@@ -35,7 +35,7 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
     {
         var professores = new List<Professor>();
 
-        Professor professor = new(1282727, "Danilo", "danilo.s@gmail.com", true, false, 1212, DateTime.Now);
+        Professor professor = new(1282727, "Danilo", "danilo.s@gmail.com", true, false, 1212, DateTime.Now, 1341567);
 
         professores.Add(professor);
 

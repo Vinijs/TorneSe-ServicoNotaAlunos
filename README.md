@@ -13,3 +13,6 @@ A partir de uma solução criada digitamos o comando para adicionar a referênci
     dotnet sln add src\TorneSe.ServicoNotaAlunos.Worker\TorneSe.ServicoNotaAlunos.Worker.csproj
     dotnet sln remove src\TorneSe.ServicoNotaAlunos.Worker\TorneSe.ServicoNotaAlunos.Worker.csproj
 ```
+
+## Sites para estudo
+- https://refactoring.guru/pt-br - Refactoring Guru

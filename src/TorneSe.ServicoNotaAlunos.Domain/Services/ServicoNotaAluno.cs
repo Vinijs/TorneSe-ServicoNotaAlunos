@@ -9,6 +9,8 @@ using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 using TorneSe.ServicoNotaAlunos.Domain.Excecoes;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
     public class ServicoNotaAluno : IServicoNotaAluno
@@ -16,12 +18,14 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
         private readonly ContextoNotificacao _contextoNotificacao;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IDisciplinaRepository _disciplinaRepository;
+        private readonly ServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
         public ServicoNotaAluno(ContextoNotificacao contextoNotificacao, IUsuarioRepository usuarioRepository,
-                                IDisciplinaRepository disciplinaRepository)
+                                IDisciplinaRepository disciplinaRepository, ServicoValidacaoNotaAluno servicoValidacaoNotaAluno)
         {
             _contextoNotificacao = contextoNotificacao;
             _usuarioRepository = usuarioRepository;
             _disciplinaRepository = disciplinaRepository;
+            _servicoValidacaoNotaAluno = servicoValidacaoNotaAluno;
         }
 
         public async Task LancarNota(RegistrarNotaAluno registrarNotaAluno)
@@ -42,11 +46,36 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
             // var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina(registrarNotaAluno);
 
-            var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina2(registrarNotaAluno);
+            //var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina2(registrarNotaAluno);
+
+            var request = await ConstruirRequest(registrarNotaAluno);
+
+            if(_contextoNotificacao.TemNotificacoes)
+                return;
+
+            // _servicoValidacaoNotaAluno.ValidarLancamento(aluno,professor,disciplina);
+
+            _servicoValidacaoNotaAluno.ValidarLancamento(request);
 
             if(_contextoNotificacao.TemNotificacoes)
                 return;
                 
+        }
+
+        private async Task<ServicoNotaValidacaoRequest> ConstruirRequest(RegistrarNotaAluno registrarNotaAluno)
+        {
+            var request = ServicoNotaValidacaoRequest.Instance;
+            request.AlunoId = registrarNotaAluno.AlunoId;
+            request.ProfessorId = registrarNotaAluno.ProfessorId;
+            request.AtividadeId = registrarNotaAluno.AtividadeId;
+
+            var initialHandler = new AlunoRequestBuildHandler(_contextoNotificacao, _usuarioRepository);
+            initialHandler.SetNext(new ProfessorRequestBuildHandler(_contextoNotificacao, _usuarioRepository))
+                                    .SetNext(new DisciplinaRequestBuildHandler(_contextoNotificacao, _disciplinaRepository));
+
+            await initialHandler.Handle(request);
+
+            return request;
         }
 
         private async Task<(Aluno aluno, Professor professor, Disciplina disciplina)> BuscarAlunoProfessorDisciplina2(RegistrarNotaAluno registrarNotaAluno)

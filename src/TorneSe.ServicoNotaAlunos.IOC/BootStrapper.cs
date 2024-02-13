@@ -23,6 +23,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
             RegistrarRepositorios(services);
             RegistrarFilas(services);
             RegistrarContextoNotificacao(services);
+            RegistrarEncadeamentos(services);
             return services;
         }
 
@@ -51,6 +52,11 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         private static void RegistrarContextoNotificacao(IServiceCollection services)
         {
             services.AddScoped<ContextoNotificacao>();
+        }
+
+        private static void RegistrarEncadeamentos(IServiceCollection services)
+        {
+            
         } 
 
     }
