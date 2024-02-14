@@ -7,14 +7,13 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 public class Nota: Entidade
 {
     public Nota(int alunoId,int atividadeId, double valor,DateTime dataLancamento,
-                int usuarioId, bool canceladaPorRetentativa)
+                int usuarioId)
     {
         AlunoId = alunoId;
         AtividadeId = atividadeId;
         Valor = valor;
         dataLancamento = DataLancamento;
         UsuarioId = usuarioId;
-        CanceladaPorRetentativa = canceladaPorRetentativa;
     }
 
     protected Nota() { }
@@ -27,4 +26,7 @@ public class Nota: Entidade
     public bool CanceladaPorRetentativa { get; private set; }
     public Aluno ALuno { get; set; }
     public Atividade Atividade { get; set; }
+
+    public void CancelarNotaPorRetentativa() => 
+        CanceladaPorRetentativa = true;
 }

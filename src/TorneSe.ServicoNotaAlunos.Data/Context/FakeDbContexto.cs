@@ -49,7 +49,7 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
         var disciplinas = new List<Disciplina>();
 
         var disciplina = new Disciplina("Matemática", "Matemática base ensino médio"
-        , new DateTime(2021,10,12),new DateTime(2022,02,12), TipoDisciplina.Teorica, 
+        , new DateTime(2021,10,12),new DateTime(2024,10,12), TipoDisciplina.Teorica, 
         new DateTime(2021, 09,12), 1282727);
 
         var conteudo = new Conteudo("Equações segundo grau", "Aprendizado de equações de segundo grau",

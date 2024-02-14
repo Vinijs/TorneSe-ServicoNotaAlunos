@@ -11,6 +11,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Excecoes;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
 using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
     public class ServicoNotaAluno : IServicoNotaAluno
@@ -19,13 +20,16 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IDisciplinaRepository _disciplinaRepository;
         private readonly ServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
+        private readonly IAsyncHandler<ServicoNotaValidacaoRequest> _requestBuildHandler;
         public ServicoNotaAluno(ContextoNotificacao contextoNotificacao, IUsuarioRepository usuarioRepository,
-                                IDisciplinaRepository disciplinaRepository, ServicoValidacaoNotaAluno servicoValidacaoNotaAluno)
+                                IDisciplinaRepository disciplinaRepository, ServicoValidacaoNotaAluno servicoValidacaoNotaAluno,
+                                IAsyncHandler<ServicoNotaValidacaoRequest> requestBuildHandler)
         {
             _contextoNotificacao = contextoNotificacao;
             _usuarioRepository = usuarioRepository;
             _disciplinaRepository = disciplinaRepository;
             _servicoValidacaoNotaAluno = servicoValidacaoNotaAluno;
+            _requestBuildHandler = requestBuildHandler;
         }
 
         public async Task LancarNota(RegistrarNotaAluno registrarNotaAluno)
@@ -59,8 +63,29 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
             if(_contextoNotificacao.TemNotificacoes)
                 return;
+
+            if(AlunoPossuiNotaParaCancelar(request.Aluno, registrarNotaAluno.AtividadeId, registrarNotaAluno.NotaSubstitutiva))
+            {
+                RemoverNotaAluno(request.Aluno, registrarNotaAluno.AtividadeId);
+            }
+
+            var nota = new Nota(request.AlunoId, request.AtividadeId, registrarNotaAluno.ValorNota,
+                            DateTime.Now, 101020);
+
+            request.Aluno.AdicionarNotas(nota);
+
+            await _usuarioRepository.UnitOfWork.Commit();
                 
         }
+
+        private void RemoverNotaAluno(Aluno aluno, int atividadeId)
+        {
+            var nota = aluno.Notas.FirstOrDefault(x => x.AtividadeId == atividadeId);
+            nota.CancelarNotaPorRetentativa();
+        }
+
+        private bool AlunoPossuiNotaParaCancelar(Aluno aluno, int atividadeId, bool notaSubstitutiva) =>
+            aluno.Notas.Any(x => x.AtividadeId == atividadeId && notaSubstitutiva);
 
         private async Task<ServicoNotaValidacaoRequest> ConstruirRequest(RegistrarNotaAluno registrarNotaAluno)
         {
@@ -69,11 +94,13 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
             request.ProfessorId = registrarNotaAluno.ProfessorId;
             request.AtividadeId = registrarNotaAluno.AtividadeId;
 
-            var initialHandler = new AlunoRequestBuildHandler(_contextoNotificacao, _usuarioRepository);
-            initialHandler.SetNext(new ProfessorRequestBuildHandler(_contextoNotificacao, _usuarioRepository))
-                                    .SetNext(new DisciplinaRequestBuildHandler(_contextoNotificacao, _disciplinaRepository));
+            // var initialHandler = new AlunoRequestBuildHandler(_contextoNotificacao, _usuarioRepository);
+            // initialHandler.SetNext(new ProfessorRequestBuildHandler(_contextoNotificacao, _usuarioRepository))
+            //                         .SetNext(new DisciplinaRequestBuildHandler(_contextoNotificacao, _disciplinaRepository));
 
-            await initialHandler.Handle(request);
+            // await initialHandler.Handle(request);
+
+            await _requestBuildHandler.Handle(request);
 
             return request;
         }

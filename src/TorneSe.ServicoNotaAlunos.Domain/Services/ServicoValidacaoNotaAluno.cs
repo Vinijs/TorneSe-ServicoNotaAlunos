@@ -10,15 +10,20 @@ using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
 using TorneSe.ServicoNotaAlunos.Domain.Enums;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 {
     private readonly ContextoNotificacao _contextoNotificacao;
 
-    public ServicoValidacaoNotaAluno(ContextoNotificacao contextoNotificacao)
+    private readonly IHandler<ServicoNotaValidacaoRequest> _validacaoHandler;
+
+    public ServicoValidacaoNotaAluno(ContextoNotificacao contextoNotificacao,
+                                     IHandler<ServicoNotaValidacaoRequest> validacaoHandler)
     {
         _contextoNotificacao = contextoNotificacao;
+        _validacaoHandler = validacaoHandler;
     }
     private void ValidarProfessor(Professor professor,int disciplinaId)
     {
@@ -94,12 +99,13 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 
     public void ValidarLancamento(ServicoNotaValidacaoRequest request)
     {
-        var inicialHandler = new AlunoValidacaoHandler(_contextoNotificacao);
+        // var inicialHandler = new AlunoValidacaoHandler(_contextoNotificacao);
         
-        inicialHandler.SetNext(new ProfessorValidacaoHandler(_contextoNotificacao))
-        .SetNext(new DisciplinaValidacaoHandler(_contextoNotificacao));
+        // inicialHandler.SetNext(new ProfessorValidacaoHandler(_contextoNotificacao))
+        // .SetNext(new DisciplinaValidacaoHandler(_contextoNotificacao));
+        // inicialHandler.Handle(request);
 
-        inicialHandler.Handle(request);
+        _validacaoHandler.Handle(request);
     }
 
 }
