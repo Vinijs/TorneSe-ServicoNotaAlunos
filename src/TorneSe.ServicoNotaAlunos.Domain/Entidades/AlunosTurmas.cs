@@ -11,13 +11,11 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
             AlunoId = alunoId;
             TurmaId = turmaId;
             DataCadastro = dataCadastro;
-            Turmas = new List<Turma>();
-            Alunos = new List<Aluno>();
         }
         public int AlunoId { get; set; }
         public int TurmaId { get; set; }
         public DateTime DataCadastro { get; set; }
 
-        public ICollection<Turma> Turmas { get; set; }
-        public ICollection<Aluno> Alunos { get; set; }
+        public Turma Turma { get; set; }
+        public Aluno Aluno { get; set; }
     }

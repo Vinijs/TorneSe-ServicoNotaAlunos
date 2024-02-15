@@ -19,7 +19,7 @@ public class AlunoValidacaoHandler : AbstractHandler<ServicoNotaValidacaoRequest
     public override void Handle(ServicoNotaValidacaoRequest request)
     {
         
-        if(!request.Aluno.Usuario.Ativo)
+        if(!request.Aluno.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_INATIVO);
             return;
@@ -37,6 +37,6 @@ public class AlunoValidacaoHandler : AbstractHandler<ServicoNotaValidacaoRequest
 
     private bool AlunoEstaMatriculado(Aluno aluno, int disciplinaId) =>
         aluno.AlunosTurmas
-            .SelectMany(alunoTurma => alunoTurma.Turmas)
+            .Select(alunoTurma => alunoTurma.Turma)
             .Any(turma => turma.DisciplinaId == disciplinaId);
 }

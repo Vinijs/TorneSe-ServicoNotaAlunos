@@ -19,7 +19,7 @@ public class ProfessorValidacaoHandler : AbstractHandler<ServicoNotaValidacaoReq
     public override void Handle(ServicoNotaValidacaoRequest request)
     {
         //o professor deve ser um usuário ativo
-        if(!request.Professor.Usuario.Ativo)
+        if(!request.Professor.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_INATIVO);
             return;

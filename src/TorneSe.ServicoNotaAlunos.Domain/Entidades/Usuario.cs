@@ -31,6 +31,4 @@ public class Usuario: Entidade, IRaizAgregacao
     public Telefone TelefoneContato { get; private set; }
     public bool Administrativo { get; private set; }
     public DateTime DataCadastro { get; private set; }
-    public Aluno Aluno { get; private set; }
-    public Professor Professor { get; private set; }
 }

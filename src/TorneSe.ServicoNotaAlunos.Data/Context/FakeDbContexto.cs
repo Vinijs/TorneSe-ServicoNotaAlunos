@@ -26,6 +26,16 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
 
         Aluno aluno = new(1234, "Raphael", "raphael@gmail.com", 1212, DateTime.Now);
 
+        aluno.AlunosTurmas = new List<AlunosTurmas>() 
+        { 
+            new(1234,10019,DateTime.Now) 
+            {
+                Turma =
+                    new("Grupo Matemática I", Periodo.Noturno, new DateTime(2021,06,01),
+                    new DateTime(2021,12,01), DateTime.Now, 1341567)
+            } 
+        };
+
         alunos.Add(aluno);
 
         return alunos;

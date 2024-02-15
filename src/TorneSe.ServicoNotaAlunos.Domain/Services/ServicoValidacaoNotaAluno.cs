@@ -28,7 +28,7 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
     private void ValidarProfessor(Professor professor,int disciplinaId)
     {
         //o professor deve ser um usuário ativo
-        if(!professor.Usuario.Ativo)
+        if(!professor.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_INATIVO);
             return;
@@ -69,7 +69,7 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
     private void ValidarAluno(Aluno aluno,int disciplinaId)
     {
         //O aluno deve ser um usuario ativo
-        if(!aluno.Usuario.Ativo)
+        if(!aluno.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_INATIVO);
             return;
@@ -88,7 +88,7 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 
     private bool AlunoEstaMatriculado(Aluno aluno, int disciplinaId) =>
         aluno.AlunosTurmas
-            .SelectMany(alunoTurma => alunoTurma.Turmas)
+            .Select(alunoTurma => alunoTurma.Turma)
             .Any(turma => turma.DisciplinaId == disciplinaId);
     public void ValidarLancamento(Aluno aluno, Professor professor, Disciplina disciplina)
     {
