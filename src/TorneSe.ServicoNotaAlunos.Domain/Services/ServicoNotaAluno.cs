@@ -36,6 +36,8 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
         {
             Console.WriteLine("Processando lógica de negócio....");
 
+            var conectado = await _disciplinaRepository.ConectadoAoBanco();
+
             if(!registrarNotaAluno.MensagemEstaValida())
             {
                 AdicionarMensagensErroNoContexto(registrarNotaAluno);

@@ -11,6 +11,6 @@ public class UsuarioMapping : IEntityTypeConfiguration<Usuario>
 {
     public void Configure(EntityTypeBuilder<Usuario> builder)
     {
-        throw new NotImplementedException();
+    
     }        
 }

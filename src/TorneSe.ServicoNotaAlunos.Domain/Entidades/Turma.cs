@@ -28,5 +28,6 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
     public DateTime DataCadastro { get; private set; }
     public int DisciplinaId { get; private set; }
     public Disciplina Disciplina { get; private set; }
-    public ICollection<AlunosTurmas> AlunosTurmas { get; private set; }
+    public ICollection<AlunosTurmas> AlunosTurmas { get; set; }
+    public ICollection<Aluno> Alunos { get; private set; }
 }

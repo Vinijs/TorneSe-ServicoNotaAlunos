@@ -11,6 +11,6 @@ public class AtividadeMapping : IEntityTypeConfiguration<Atividade>
 {
     public void Configure(EntityTypeBuilder<Atividade> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

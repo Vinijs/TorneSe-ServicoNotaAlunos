@@ -11,6 +11,6 @@ public class ProfessorMapping : IEntityTypeConfiguration<Professor>
 {
     public void Configure(EntityTypeBuilder<Professor> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

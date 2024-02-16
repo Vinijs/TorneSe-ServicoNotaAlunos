@@ -1,15 +1,26 @@
 using TorneSe.ServicoNotaAlunos.Worker;
 using TorneSe.ServicoNotaAlunos.IOC;
+using TorneSe.ServicoNotaAlunos.Data.Context;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostContext, config) =>
     {
-        config.AddEnvironmentVariables();
+        config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json")
+                .AddEnvironmentVariables();
+
+        hostContext.Configuration = config.Build();
     })
-    .ConfigureServices(services =>
+    .ConfigureServices((hostContext,services) =>
     {
         services.ConfigurarInjecaoDependencia()
-        .AddHostedService<ServicoNotaAlunoWorker>();
+        .AddHostedService<ServicoNotaAlunoWorker>()
+        .AddNpgsql<ServicoNotaAlunosContexto>(hostContext.Configuration.GetConnectionString("DefaultConnection"), 
+        options => 
+        {
+            options.CommandTimeout(20);
+        });
         // .AddHostedService<WorkerExemplo>();
     })
     .Build();

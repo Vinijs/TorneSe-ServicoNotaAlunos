@@ -12,6 +12,6 @@ public class DisciplinaMapping : IEntityTypeConfiguration<Disciplina>
 {
     public void Configure(EntityTypeBuilder<Disciplina> builder)
     {
-        throw new NotImplementedException();
+    
     }
 }
