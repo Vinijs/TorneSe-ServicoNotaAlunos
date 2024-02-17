@@ -9,7 +9,7 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 public class Disciplina : Entidade, IRaizAgregacao
 {
     public Disciplina(string nome,string descricao, DateTime dataInicio,
-                      DateTime dataFim, TipoDisciplina tipoDisciplina,DateTime dataCadastro, int professorId)
+                      DateTime dataFim, TipoDisciplina tipoDisciplina,DateTime dataCadastro)
     {
         Nome = nome;
         Descricao = descricao;
@@ -17,7 +17,6 @@ public class Disciplina : Entidade, IRaizAgregacao
         DataFim = dataFim;
         TipoDisciplina = tipoDisciplina;
         DataCadastro = dataCadastro;
-        // ProfessorId = professorId;
         Conteudos = new List<Conteudo>();
     }
 
@@ -29,8 +28,6 @@ public class Disciplina : Entidade, IRaizAgregacao
     public DateTime DataFim { get; private set; }
     public TipoDisciplina TipoDisciplina { get; private set; }
     public DateTime DataCadastro { get; private set; }
-    // public int ProfessorId { get; private set; }
-
     public Professor Professor { get; private set; }
     public ICollection<Conteudo> Conteudos { get; private set; }
     public ICollection<Turma> Turmas { get; private set; }

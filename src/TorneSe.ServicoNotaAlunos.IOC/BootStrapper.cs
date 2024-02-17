@@ -40,6 +40,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         private static void RegistrarContextos(IServiceCollection services)
         {
             services.AddScoped<FakeDbContexto>();
+            services.AddScoped<ServicoNotaAlunosContexto>();
         }
 
         private static void RegistrarRepositorios(IServiceCollection services)

@@ -23,7 +23,7 @@ public class ProfessorRequestBuildHandler : AbstractAsyncHandler<ServicoNotaVali
 
     public override async Task Handle(ServicoNotaValidacaoRequest request)
     {
-        request.Professor = await _usuarioRepository.BuscarProfessor(request.ProfessorId);
+        request.Professor = await _usuarioRepository.BuscarProfessorDb(request.ProfessorId);
 
             if(request.Professor is null)
             {

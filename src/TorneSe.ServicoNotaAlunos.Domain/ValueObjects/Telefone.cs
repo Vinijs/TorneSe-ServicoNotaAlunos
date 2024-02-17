@@ -4,14 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.ValueObjects;
-    public class Telefone
+public class Telefone
+{
+    public Telefone(string texto)
     {
-        public string Numero { get; set; }
-        public string Area { get; set; }
-        public string CodigoPais { get; set; }
-
-        public override string ToString()
+        if (texto.Split(" ").Count() == 3)
         {
-            return $"{CodigoPais} {Area} {Numero}";
-        }        
+            CodigoPais = texto.Split(" ")[0];
+            Area = texto.Split(" ")[1];
+            Numero = texto.Split(" ")[2];
+        }
     }
+
+    public Telefone(){ }
+    public string Numero { get; set; }
+    public string Area { get; set; }
+    public string CodigoPais { get; set; }
+
+    public override string ToString()
+    {
+        return $"{CodigoPais} {Area} {Numero}";
+    }
+}

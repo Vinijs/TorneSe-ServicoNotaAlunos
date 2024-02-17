@@ -10,4 +10,6 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
     {
         Task<Aluno> BuscarAluno(int alunoId);
         Task<Professor> BuscarProfessor(int professorId);
+         Task<Aluno> BuscarAlunoDb(int alunoId);
+        Task<Professor> BuscarProfessorDb(int professorId);
     }

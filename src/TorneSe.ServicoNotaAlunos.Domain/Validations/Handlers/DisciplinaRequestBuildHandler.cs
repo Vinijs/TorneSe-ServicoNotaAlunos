@@ -23,11 +23,11 @@ public class DisciplinaRequestBuildHandler : AbstractAsyncHandler<ServicoNotaVal
 
     public override async Task Handle(ServicoNotaValidacaoRequest request)
     {
-        request.Disciplina = await _disciplinaRepository.BuscarDisciplinaPorAtividadeId(request.AtividadeId);
+        request.Disciplina = await _disciplinaRepository.BuscarDisciplinaPorAtividadeIdDb(request.AtividadeId);
 
-        if (request.Professor is null)
+        if (request.Disciplina is null)
         {
-            _contextoNotificacao.Add(Constantes.MensagensExcecao.PROFESSOR_INEXISTENTE);
+            _contextoNotificacao.Add(Constantes.MensagensExcecao.DISCIPLINA_INEXISTENTE);
             return;
         }
 
