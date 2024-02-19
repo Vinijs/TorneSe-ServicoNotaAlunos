@@ -8,7 +8,7 @@ public class Telefone
 {
     public Telefone(string texto)
     {
-        if (texto.Split(" ").Count() == 3)
+        if (!string.IsNullOrEmpty(texto) && texto.Split(" ").Count() == 3)
         {
             CodigoPais = texto.Split(" ")[0];
             Area = texto.Split(" ")[1];

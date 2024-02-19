@@ -9,7 +9,7 @@ public abstract class SqsClient<T> : IQueueClient<T>
 {
      public virtual Task DeleteMessageAsync(string messageHandle)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public virtual Task<QueueMessage<T>> GetMessageAsync()

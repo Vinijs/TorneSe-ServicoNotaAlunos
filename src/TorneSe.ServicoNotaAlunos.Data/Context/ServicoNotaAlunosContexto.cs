@@ -8,7 +8,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
 namespace TorneSe.ServicoNotaAlunos.Data.Context;
 
-public class ServicoNotaAlunosContexto : DbContext, IDisposable, IUnitOfWork
+public class ServicoNotaAlunosContexto : DbContext
 {
     public ServicoNotaAlunosContexto(DbContextOptions<ServicoNotaAlunosContexto> options) 
         : base(options){}
@@ -22,9 +22,6 @@ public class ServicoNotaAlunosContexto : DbContext, IDisposable, IUnitOfWork
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Turma> Turmas { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
-
-    public async Task<bool> Commit() => 
-        await SaveChangesAsync() > 0;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -49,4 +46,7 @@ public class ServicoNotaAlunosContexto : DbContext, IDisposable, IUnitOfWork
     {
         base.Dispose();
     }
+
+    public bool ContextoPossuiMudancas() =>
+         ChangeTracker.HasChanges();
 }

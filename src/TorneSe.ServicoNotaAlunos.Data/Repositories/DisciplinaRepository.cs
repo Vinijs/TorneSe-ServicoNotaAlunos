@@ -20,7 +20,6 @@ namespace TorneSe.ServicoNotaAlunos.Data.Repositories;
             _contexto = contexto;            
             _servicoNotaAlunosContexto = servicoNotaAlunosContexto;
         }
-        public IUnitOfWork UnitOfWork => _servicoNotaAlunosContexto;
 
 
         public async Task<bool> ConectadoAoBanco() =>
@@ -31,7 +30,9 @@ namespace TorneSe.ServicoNotaAlunos.Data.Repositories;
 
 
          public async Task<Disciplina> BuscarDisciplinaPorAtividadeIdDb(int atividadeId) =>
-            await _servicoNotaAlunosContexto.Disciplinas.FirstOrDefaultAsync(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId));
+            await _servicoNotaAlunosContexto.Disciplinas
+            .AsNoTrackingWithIdentityResolution()
+            .FirstOrDefaultAsync(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId));
 
         public void Dispose()
         {

@@ -20,8 +20,6 @@ namespace TorneSe.ServicoNotaAlunos.Data.Repositories;
             _servicoNotaAlunosContexto = servicoNotaAlunosContexto;
         }
 
-        public IUnitOfWork UnitOfWork => _servicoNotaAlunosContexto;
-
         public async Task<Aluno> BuscarAlunoDb(int alunoId) =>
             await Task.FromResult(_servicoNotaAlunosContexto.Alunos.FirstOrDefault(x => x.Id == alunoId));
 
@@ -29,7 +27,8 @@ namespace TorneSe.ServicoNotaAlunos.Data.Repositories;
             await Task.FromResult(_contexto.Alunos.FirstOrDefault(x => x.Id == alunoId));
 
         public async Task<Professor> BuscarProfessorDb(int professorId) =>
-            await Task.FromResult(_servicoNotaAlunosContexto.Professores.FirstOrDefault(x => x.Id == professorId));
+            await Task.FromResult(_servicoNotaAlunosContexto.Professores.AsNoTrackingWithIdentityResolution()
+                                 .FirstOrDefault(x => x.Id == professorId));
 
         public async Task<Professor> BuscarProfessor(int professorId) =>
             await Task.FromResult(_contexto.Professores.FirstOrDefault(x => x.Id == professorId));

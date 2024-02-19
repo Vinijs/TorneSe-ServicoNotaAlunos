@@ -75,8 +75,6 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
                             DateTime.Now, 101020);
 
             request.Aluno.AdicionarNotas(nota);
-
-            await _usuarioRepository.UnitOfWork.Commit();
                 
         }
 
@@ -103,6 +101,8 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
             // await initialHandler.Handle(request);
 
             await _requestBuildHandler.Handle(request);
+
+            request.Professor.AlterarNome("Danillloo");
 
             return request;
         }

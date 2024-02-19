@@ -20,6 +20,8 @@ IHost host = Host.CreateDefaultBuilder(args)
         options => 
         {
             options.CommandTimeout(20);
+            options.EnableRetryOnFailure(4,TimeSpan.FromSeconds(20),null);
+            // options.UseQuerySplittingBehavior(Microsoft.EntityFrameworkCore.QuerySplittingBehavior.SplitQuery);
         });
         // .AddHostedService<WorkerExemplo>();
     })

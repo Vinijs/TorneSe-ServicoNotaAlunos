@@ -45,11 +45,11 @@ public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>, ILancarN
             MessageBody = new()
             {
                 AlunoId = 1235,
-                AtividadeId = 1,
+                AtividadeId = 2,
                 CorrelationId = Guid.NewGuid(),
                 ProfessorId = 1282727,
-                ValorNota = 10,
-                NotaSubstitutiva = false
+                ValorNota = 8,
+                NotaSubstitutiva = true
             }
         });
         return queue;

@@ -28,4 +28,7 @@ public class Professor : Usuario
     public DateTime DataCadastro { get; private set; }
     public int DisciplinaId { get; set; }
     public Disciplina Disciplina { get; private set; }
+
+    public void AlterarNome(string novoNome) =>
+        NomeAbreviado = novoNome; 
 }
