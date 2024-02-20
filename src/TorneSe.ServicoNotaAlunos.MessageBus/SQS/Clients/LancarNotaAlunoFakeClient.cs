@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TorneSe.ServicoNotaAlunos.Domain.Messages;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.MessageBus.Messages;
+using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>, ILancarNotaAlunoFakeClient
@@ -12,7 +13,10 @@ public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>, ILancarN
     private readonly Queue<QueueMessage<RegistrarNotaAluno>> _filaNotasParaRegistrar;
     private readonly ContextoNotificacao _contextoNotificacao;
 
-    public LancarNotaAlunoFakeClient(ContextoNotificacao contextoNotificacao)
+    private const string NOME_FILA_CONFIGURACAO = "FilaConfiguracaoFake";
+
+    public LancarNotaAlunoFakeClient(ISqsContext context,ContextoNotificacao contextoNotificacao) : 
+            base(context,contextoNotificacao,NOME_FILA_CONFIGURACAO)
     {
         _filaNotasParaRegistrar = NotasParaProcessar();
         _contextoNotificacao = contextoNotificacao;
