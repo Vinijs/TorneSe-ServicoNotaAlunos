@@ -43,6 +43,8 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         {
             services.AddScoped<IServicoAplicacaoNotaAluno, ServicoAplicacaoNotaAluno>();
             services.AddScoped<IServicoNotaAluno, ServicoNotaAluno>();
+            services.AddScoped<IServicoValidacaoNotaAluno, ServicoValidacaoNotaAluno>();
+            services.AddScoped<INotaAlunoReceberMensagemService, NotaAlunoReceberMensagemService>();
             return services;
         }
 
