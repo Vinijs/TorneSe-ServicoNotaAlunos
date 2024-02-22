@@ -15,16 +15,19 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
     private readonly IServicoNotaAluno _servicoNotaAluno;
     private readonly IUnitOfWork _uow;
     private readonly INotaAlunoReceberMensagemService _notaAlunoReceberMensagem;
+    readonly INotaAlunoRespostaMensagemService _notaAlunoRespostaMensagem;
     private readonly ContextoNotificacao _contextoNotificacao;
     public ServicoAplicacaoNotaAluno(IServicoNotaAluno servicoNotaAluno,
                                      IUnitOfWork uow,
                                      INotaAlunoReceberMensagemService notaAlunoReceberMensagem,
-                                     ContextoNotificacao contextoNotificacao)
+                                     ContextoNotificacao contextoNotificacao,
+                                     INotaAlunoRespostaMensagemService notaAlunoRespostaMensagem)
     {
         _servicoNotaAluno = servicoNotaAluno;
         _uow = uow;
         _notaAlunoReceberMensagem = notaAlunoReceberMensagem;
         _contextoNotificacao = contextoNotificacao;
+        _notaAlunoRespostaMensagem = notaAlunoRespostaMensagem;
     }
     public async Task ProcessarLancamentoNota()
     {
@@ -44,14 +47,19 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
             }
             Console.WriteLine("Orquestrando o fluxo da aplicação");
             await _servicoNotaAluno.LancarNota(mensagem.MessageBody);
-            await _uow.Commit();
+
+            if(!await _uow.Commit())
+            {
+                _contextoNotificacao.Add(Constantes.MensagensAplicacao.NAO_HOUVE_MUDANCAS_NO_PROCESSAMENTO);
+            }
+
+            await _notaAlunoReceberMensagem.DeletarMensagem(mensagem.MessageHandle);
+            await _notaAlunoRespostaMensagem.EnviarMensagem(mensagem.MessageBody);
 
             if (_contextoNotificacao.TemNotificacoes)
                 Console.WriteLine(_contextoNotificacao.ToJson());
             else
                 Console.WriteLine($"Mensagem de identificador: {mensagem.MessageId}, processada com sucesso");
-
-            await _notaAlunoReceberMensagem.DeletarMensagem(mensagem.MessageHandle);
         }
         catch (DomainException ex)
         {

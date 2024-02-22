@@ -46,7 +46,7 @@ public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>, ILancarN
             MessageId = Guid.NewGuid().ToString(),
             MessageHandle = Guid.NewGuid().ToString(),
             ReceiveCount = 0,
-            MessageBody = new()
+            MessageBody = new RegistrarNotaAluno()
             {
                 AlunoId = 1235,
                 AtividadeId = 2,

@@ -32,3 +32,15 @@ A partir de uma solução criada digitamos o comando para adicionar a referênci
 
 ## GUId Generator
 - https://www.guidgenerator.com/online-guid-generator.aspx
+
+## Modelo Mensagem Entrada SQS
+```
+{
+    "AlunoId": 1234,
+    "ProfessorId": 1282727,
+    "AtividadeId": 2,
+    "CorrelationId": "fbaa64f1-8e4d-4ff4-b5ff-749dc652c4e7",
+    "ValorNota": 8.0,
+    "NotaSubstitutiva": true
+}
+```

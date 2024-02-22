@@ -102,7 +102,7 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
             await _requestBuildHandler.Handle(request);
 
-            request.Professor.AlterarNome("Danillloo");
+            // request.Professor.AlterarNome("Danillloo");
 
             return request;
         }

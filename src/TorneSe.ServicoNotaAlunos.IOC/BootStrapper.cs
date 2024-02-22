@@ -45,6 +45,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
             services.AddScoped<IServicoNotaAluno, ServicoNotaAluno>();
             services.AddScoped<IServicoValidacaoNotaAluno, ServicoValidacaoNotaAluno>();
             services.AddScoped<INotaAlunoReceberMensagemService, NotaAlunoReceberMensagemService>();
+            services.AddScoped<INotaAlunoRespostaMensagemService, NotaAlunoRespostaMensagemService>();
             return services;
         }
 
@@ -66,6 +67,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         {
             services.AddScoped<ILancarNotaAlunoFakeClient, LancarNotaAlunoFakeClient>();
             services.AddScoped<ILancarNotaAlunoRecebimentoClient, LancarNotaAlunoRecebimentoClient>();
+            services.AddScoped<ILancarNotaAlunoRespostaClient, LancarNotaAlunoRespostaClient>();
             return services;
         }
 
