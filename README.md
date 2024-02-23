@@ -44,3 +44,9 @@ A partir de uma solução criada digitamos o comando para adicionar a referênci
     "NotaSubstitutiva": true
 }
 ```
+
+## Documentação do Serilog
+- https://serilog.net/
+
+## Documentação Serilog Postgres
+- https://github.com/serilog-contrib/Serilog.Sinks.Postgresql.Alternative/blob/master/HowToUse.md

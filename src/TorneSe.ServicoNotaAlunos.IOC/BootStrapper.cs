@@ -20,11 +20,15 @@ using TorneSe.ServicoNotaAlunos.Data.UnitOfWork;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context.Interfaces;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace TorneSe.ServicoNotaAlunos.IOC;
     public static class BootStrapper
     {
-        public static IServiceCollection ConfigurarInjecaoDependencia(this IServiceCollection services)
+        public static IServiceCollection ConfigurarInjecaoDependencia(this IServiceCollection services,
+                                                                           IConfiguration configuration,
+                                                                           IHostEnvironment hostEnvironment)
         {
             services
                 .RegistrarServicos()
@@ -34,7 +38,8 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
                 .RegistrarContextoNotificacao()
                 .RegistrarEncadeamentos()
                 .RegistrarUnitofWork()
-                .RegistrarContextoSqs();
+                .RegistrarContextoSqs()
+                .ConfigurarSerilog(configuration, hostEnvironment);
                 
             return services;
         }

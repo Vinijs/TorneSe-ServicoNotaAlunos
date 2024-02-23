@@ -1,6 +1,7 @@
 using TorneSe.ServicoNotaAlunos.Worker;
 using TorneSe.ServicoNotaAlunos.IOC;
 using TorneSe.ServicoNotaAlunos.Data.Context;
+using Serilog;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostContext, config) =>
@@ -14,7 +15,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((hostContext,services) =>
     {
-        services.ConfigurarInjecaoDependencia()
+        services.ConfigurarInjecaoDependencia(hostContext.Configuration, hostContext.HostingEnvironment)
         .AddHostedService<ServicoNotaAlunoWorker>()
         .AddNpgsql<ServicoNotaAlunosContexto>(hostContext.Configuration.GetConnectionString("DefaultConnection"), 
         options => 
@@ -25,6 +26,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
         // .AddHostedService<WorkerExemplo>();
     })
+    .UseSerilog()
     .Build();
 
 host.Run();
