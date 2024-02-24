@@ -10,6 +10,8 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.PostgreSQL;
 using Serilog.Sinks.PostgreSQL.ColumnWriters;
+using Serilog.Sinks.Elasticsearch;
+using Serilog.Events;
 
 namespace TorneSe.ServicoNotaAlunos.IOC.Extensions;
 public static class SerilogExtensions
@@ -18,10 +20,8 @@ public static class SerilogExtensions
                                                          IConfiguration configuration,
                                                          IHostEnvironment hostEnvironment)
     {
+        var indexFormat = $"{configuration["Application:ApplicationName"]}-logs-{hostEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.Now:yyyy-MM-dd}"; 
         Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Is(Serilog.Events.LogEventLevel.Information)
-        .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
-        .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Information)
         .Enrich.WithProperty("Application", configuration["Application:ApplicationName"])
         .Enrich.WithProperty("Environment", hostEnvironment.EnvironmentName)
         .Enrich.FromLogContext()
@@ -29,16 +29,26 @@ public static class SerilogExtensions
         .Enrich.WithMachineName()
         .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
         // WriteTo.File($"logs/log-{hostEnvironment.EnvironmentName}.txt", rollingInterval: RollingInterval.Day)
-        .WriteTo
-                    .PostgreSQL(configuration.GetConnectionString("DefaultConnection"), 
-                    configuration["PostgresLogs:TableName"], GetColumnsOptions(), restrictedToMinimumLevel:
-                    Serilog.Events.LogEventLevel.Information, needAutoCreateTable : true, schemaName : "servnota")
+        // .WriteTo
+        //             .PostgreSQL(configuration.GetConnectionString("DefaultConnection"), 
+        //             configuration["PostgresLogs:TableName"], GetColumnsOptions(), restrictedToMinimumLevel:
+        //             Serilog.Events.LogEventLevel.Information, needAutoCreateTable : true, schemaName : "servnota")
+        // .WriteTo.MongoDB("mongodb://localhost:27018/servico-notas-tornese")
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+        {
+            MinimumLogEventLevel = LogEventLevel.Information,
+            IndexFormat = indexFormat,
+            AutoRegisterTemplate = true,
+            NumberOfShards = 2,
+            NumberOfReplicas = 1
+        })
+        .ReadFrom.Configuration(configuration)
         .CreateLogger();
 
         return services;
     }
 
-     private static IDictionary<string, ColumnWriterBase> GetColumnsOptions()
+    private static IDictionary<string, ColumnWriterBase> GetColumnsOptions()
     {
         return new Dictionary<string, ColumnWriterBase>
         {

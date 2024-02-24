@@ -343,3 +343,12 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /src/Ulife.ClassDiscAssociation.Tests/coverage.opencover.xml
+
+#Data Mongo
+/deploy/database_mongo
+
+#DataPosgres
+/deploy/database
+
+#Elastic Data
+/deploy/elasticsearch_data

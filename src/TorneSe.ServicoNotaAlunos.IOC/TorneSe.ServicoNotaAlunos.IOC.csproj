@@ -15,6 +15,9 @@
     <PackageReference Include="Serilog.Exceptions" Version="8.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Sinks.Postgresql.Alternative" Version="4.0.2" />
+    <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="9.0.3" />
   </ItemGroup>
 
   <PropertyGroup>
