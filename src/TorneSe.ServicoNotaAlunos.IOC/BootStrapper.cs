@@ -20,6 +20,7 @@ using TorneSe.ServicoNotaAlunos.Data.UnitOfWork;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context.Interfaces;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients.Interfaces;
+using TorneSe.ServicoNotaAlunos.IOC.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -39,7 +40,9 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
                 .RegistrarEncadeamentos()
                 .RegistrarUnitofWork()
                 .RegistrarContextoSqs()
-                .ConfigurarSerilog(configuration, hostEnvironment);
+                .RegistrarHealthChecks()
+                .ConfigurarSerilog(configuration, hostEnvironment)
+                .ConfigurarHealthChecks(configuration);
                 
             return services;
         }
@@ -101,6 +104,11 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
         private static IServiceCollection RegistrarContextoSqs(this IServiceCollection services)
         {
             return services.AddScoped<ISqsContext,SqsContext>();
+        }
+
+        private static IServiceCollection RegistrarHealthChecks(this IServiceCollection services)
+        {
+            return services.AddScoped<AwsSqsHealthCheck>();
         }
 
 

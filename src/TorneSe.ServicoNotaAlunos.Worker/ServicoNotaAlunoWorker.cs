@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
 
@@ -7,23 +8,30 @@ public class ServicoNotaAlunoWorker : BackgroundService
 {
     private readonly ILogger<ServicoNotaAlunoWorker> _logger;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly HealthCheckService _healthCheckService;
 
     public ServicoNotaAlunoWorker(ILogger<ServicoNotaAlunoWorker> logger,
-                                  IServiceScopeFactory serviceScopeFactory)
+                                  IServiceScopeFactory serviceScopeFactory,
+                                  HealthCheckService healthCheckService)
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
+        _healthCheckService = healthCheckService;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        var healths = await _healthCheckService.CheckHealthAsync(stoppingToken);
+        if (healths.Status == HealthStatus.Healthy)
         {
-           _logger.LogInformation(Constantes.MensagensAplicacao.INICIANDO_SERVICO);
-           using var scope = _serviceScopeFactory.CreateScope();
-           var servicoNotaAlunoApp = scope.ServiceProvider.GetRequiredService<IServicoAplicacaoNotaAluno>();
-           
-           await servicoNotaAlunoApp.ProcessarLancamentoNota();
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation(Constantes.MensagensAplicacao.INICIANDO_SERVICO);
+                using var scope = _serviceScopeFactory.CreateScope();
+                var servicoNotaAlunoApp = scope.ServiceProvider.GetRequiredService<IServicoAplicacaoNotaAluno>();
+
+                await servicoNotaAlunoApp.ProcessarLancamentoNota();
+            }
         }
     }
 }
