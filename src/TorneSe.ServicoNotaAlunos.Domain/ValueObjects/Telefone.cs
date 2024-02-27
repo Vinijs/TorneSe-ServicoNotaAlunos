@@ -15,8 +15,6 @@ public class Telefone
             Numero = texto.Split(" ")[2];
         }
     }
-
-    public Telefone(){ }
     public string Numero { get; set; }
     public string Area { get; set; }
     public string CodigoPais { get; set; }
