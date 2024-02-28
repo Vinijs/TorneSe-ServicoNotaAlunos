@@ -15,7 +15,7 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
         DataInicio = dataInicio;
         DataFinal = dataFinal;
         DataCadastro = dataCadastro;
-        // DisciplinaId = disciplinaId;
+        DisciplinaId = disciplinaId;
         AlunosTurmas = new List<AlunosTurmas>();
 
     }

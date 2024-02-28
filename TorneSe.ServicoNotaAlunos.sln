@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{172A1184-080
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorneSe.ServicoNotaAlunos.Worker", "src\TorneSe.ServicoNotaAlunos.Worker\TorneSe.ServicoNotaAlunos.Worker.csproj", "{B63C4355-18E6-4A33-B9B3-DEB032416C9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{12073790-FDAD-44F4-B636-B592C8DEFB25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorneSe.ServicoNotaAlunos.UnitTests", "tests\TorneSe.ServicoNotaAlunos.UnitTests\TorneSe.ServicoNotaAlunos.UnitTests.csproj", "{3014D099-0C9D-4056-9A92-82515DE36F00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{B63C4355-18E6-4A33-B9B3-DEB032416C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B63C4355-18E6-4A33-B9B3-DEB032416C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B63C4355-18E6-4A33-B9B3-DEB032416C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3014D099-0C9D-4056-9A92-82515DE36F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3014D099-0C9D-4056-9A92-82515DE36F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3014D099-0C9D-4056-9A92-82515DE36F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3014D099-0C9D-4056-9A92-82515DE36F00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B63C4355-18E6-4A33-B9B3-DEB032416C9C} = {172A1184-080A-486E-A1F9-BD5DF33387F8}
+		{3014D099-0C9D-4056-9A92-82515DE36F00} = {12073790-FDAD-44F4-B636-B592C8DEFB25}
 	EndGlobalSection
 EndGlobal

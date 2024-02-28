@@ -15,6 +15,7 @@ public class Aluno : Usuario
         DataCadastro = dataCadastro;
         Notas = new List<Nota>();
         AlunosTurmas = new List<AlunosTurmas>();
+        TornarAtivo();
     }
 
     protected Aluno() { }
@@ -27,9 +28,14 @@ public class Aluno : Usuario
     public ICollection<AlunosTurmas> AlunosTurmas { get; set; }
     public ICollection<Turma> Turmas { get; private set; }
 
-    public void AdicionarNotas(Nota nota)
+    public void AdicionarNota(Nota nota)
     {
         //Validar a Nota
         Notas.Add(nota);
+    }
+
+    public void InativarAluno()
+    {
+
     }
 }

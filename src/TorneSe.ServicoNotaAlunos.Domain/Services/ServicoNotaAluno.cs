@@ -19,10 +19,10 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
         private readonly ContextoNotificacao _contextoNotificacao;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IDisciplinaRepository _disciplinaRepository;
-        private readonly ServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
+        private readonly IServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
         private readonly IAsyncHandler<ServicoNotaValidacaoRequest> _requestBuildHandler;
         public ServicoNotaAluno(ContextoNotificacao contextoNotificacao, IUsuarioRepository usuarioRepository,
-                                IDisciplinaRepository disciplinaRepository, ServicoValidacaoNotaAluno servicoValidacaoNotaAluno,
+                                IDisciplinaRepository disciplinaRepository, IServicoValidacaoNotaAluno servicoValidacaoNotaAluno,
                                 IAsyncHandler<ServicoNotaValidacaoRequest> requestBuildHandler)
         {
             _contextoNotificacao = contextoNotificacao;
@@ -74,7 +74,7 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Services;
             var nota = new Nota(request.AlunoId, request.AtividadeId, registrarNotaAluno.ValorNota,
                             DateTime.Now, 101020);
 
-            request.Aluno.AdicionarNotas(nota);
+            request.Aluno.AdicionarNota(nota);
                 
         }
 

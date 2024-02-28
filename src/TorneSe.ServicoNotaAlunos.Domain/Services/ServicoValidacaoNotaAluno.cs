@@ -25,62 +25,69 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
         _contextoNotificacao = contextoNotificacao;
         _validacaoHandler = validacaoHandler;
     }
-    private void ValidarProfessor(Professor professor,int disciplinaId)
+    private bool ValidarProfessor(Professor professor,int disciplinaId)
     {
         //o professor deve ser um usuário ativo
         if(!professor.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_INATIVO);
-            return;
+            return false;
         }
 
         //Deve ministrar a disciplina
         if(!(professor.DisciplinaId == disciplinaId))
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_NAO_MINISTRA_A_DISCIPLINA);
-            return;
+            return false;
         }
 
         //Deve ser professor titular e não suplente
         if(!professor.ProfessorTitular && professor.ProfessorSuplente)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_DEVE_SER_TITULAR);
-            return;
+            return false;
         }
+
+        return true;
+
     }
 
-    private void ValidarDisciplina(Disciplina disciplina)
+    private bool ValidarDisciplina(Disciplina disciplina)
     {
         //A disciplina não pode ser do tipo encontro
         if(disciplina.TipoDisciplina == TipoDisciplina.Encontro)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.DISCIPLINA_TIPO_ENCONTRO);
-            return;
+            return false;
         }
 
         //A disciplina deve estar ativa
         if(!DisciplinaAtiva(disciplina))
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.DISCIPLINA_INATIVA);
-            return;
+            return false;
         }
+
+        return true;
     }
 
-    private void ValidarAluno(Aluno aluno,int disciplinaId)
+    private bool ValidarAluno(Aluno aluno,int disciplinaId)
     {
         //O aluno deve ser um usuario ativo
         if(!aluno.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_INATIVO);
-            return;
+            return false;
         }
 
         //O aluno deve estar inscrito na disciplina pela sua turma
         if(!AlunoEstaMatriculado(aluno, disciplinaId))
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_NAO_ESTA_MATRICULADO);
-            return;
+            return false;
         }
+
+        return true;
     }
 
     private bool DisciplinaAtiva(Disciplina disciplina) =>
@@ -92,9 +99,11 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
             .Any(turma => turma.DisciplinaId == disciplinaId);
     public void ValidarLancamento(Aluno aluno, Professor professor, Disciplina disciplina)
     {
+        if(!ValidarAluno(aluno, disciplina.Id))
+            return;
+        if(!ValidarProfessor(professor, disciplina.Id))
+            return;
         ValidarDisciplina(disciplina);
-        ValidarProfessor(professor, disciplina.Id);
-        ValidarAluno(aluno, disciplina.Id);
     }
 
     public void ValidarLancamento(ServicoNotaValidacaoRequest request)

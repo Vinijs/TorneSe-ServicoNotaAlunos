@@ -26,6 +26,10 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
         // .AddHostedService<WorkerExemplo>();
     })
+    .UseWindowsService(options =>
+    {
+        options.ServiceName = ".NET Worker Nota Alunos";
+    })
     .UseSerilog()
     .Build();
 
