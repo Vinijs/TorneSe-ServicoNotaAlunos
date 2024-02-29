@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context.Interfaces;
+using TorneSe.ServicoNotaAlunos.Data.Environment;
 using Microsoft.Extensions.Configuration;
 using Amazon;
 using Amazon.SQS;
@@ -19,10 +20,10 @@ public class SqsContext : ISqsContext
     public SqsContext(IConfiguration configuration)
     {
         _configuration = configuration;
-        var configuracoesAws = configuration.GetSection("ConfiguracoesAws");
-        _awsAccessKey = configuracoesAws.GetValue<string>("AccessKey");
-        _awsSecretAccessKey = configuracoesAws.GetValue<string>("SecretAccessKey");
-        _segundosTempoEspera = configuracoesAws.GetValue<int>("SegundosTempoEspera");
+        var provedorVariaveis = ProvedorVariaveisAmbiente.Instancia;
+        _awsAccessKey = provedorVariaveis.AwsSecret;
+        _awsSecretAccessKey = provedorVariaveis.AwsSecretAccessKey;
+        _segundosTempoEspera = provedorVariaveis.AwsLongPooling;
         _sqs = BuscarClienteAmazonSqs();
     }
 

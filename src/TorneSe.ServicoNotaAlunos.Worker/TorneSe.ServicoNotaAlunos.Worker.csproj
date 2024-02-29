@@ -5,10 +5,10 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>TorneSe.ServicoNotaAlunos.Worker</RootNamespace>
-    <OutputType>exe</OutputType>
+    <!-- <OutputType>exe</OutputType>
     <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget> -->
     <UserSecretsId>dotnet-TorneSe.ServicoNotaAlunos.Worker-cc934eaa-e43c-427a-9c4b-b6dfc5adb4df</UserSecretsId>
   </PropertyGroup>
 

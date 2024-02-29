@@ -12,6 +12,7 @@ using Serilog.Sinks.PostgreSQL;
 using Serilog.Sinks.PostgreSQL.ColumnWriters;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Events;
+using TorneSe.ServicoNotaAlunos.Data.Environment;
 
 namespace TorneSe.ServicoNotaAlunos.IOC.Extensions;
 public static class SerilogExtensions
@@ -20,6 +21,7 @@ public static class SerilogExtensions
                                                          IConfiguration configuration,
                                                          IHostEnvironment hostEnvironment)
     {
+        var provedorVariaveis = ProvedorVariaveisAmbiente.Instancia;
         var indexFormat = $"{configuration["Application:ApplicationName"]}-logs-{hostEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.Now:yyyy-MM-dd}"; 
         Log.Logger = new LoggerConfiguration()
         .Enrich.WithProperty("Application", configuration["Application:ApplicationName"])
@@ -30,13 +32,13 @@ public static class SerilogExtensions
         .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
         // WriteTo.File($"logs/log-{hostEnvironment.EnvironmentName}.txt", rollingInterval: RollingInterval.Day)
         // .WriteTo
-        //             .PostgreSQL(configuration.GetConnectionString("DefaultConnection"), 
+        //             .PostgreSQL(provedorVariaveis.DefaultConnection), 
         //             configuration["PostgresLogs:TableName"], GetColumnsOptions(), restrictedToMinimumLevel:
         //             Serilog.Events.LogEventLevel.Information, needAutoCreateTable : true, schemaName : "servnota")
-        .WriteTo.MongoDB(configuration.GetConnectionString("MongoDbLogs"), collectionName: "logs-notas")
+        .WriteTo.MongoDB(provedorVariaveis.MongoDbUrl, collectionName: "logs-notas")
         .WriteTo.Elasticsearch(
         new
-        ElasticsearchSinkOptions(new Uri(configuration.GetConnectionString("ElasticSearchLogs")))
+        ElasticsearchSinkOptions(new Uri(provedorVariaveis.ElasticSearchUrl))
         {
             MinimumLogEventLevel = LogEventLevel.Information,
             IndexFormat = indexFormat,
