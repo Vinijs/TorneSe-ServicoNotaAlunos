@@ -352,3 +352,6 @@ healthchecksdb
 
 #Elastic Data
 /deploy/elasticsearch_data
+
+#.env
+*.env

@@ -1,0 +1,6 @@
+export AccessKey=CHAVE_AWS
+export SecretAccessKey=SEGREDO_AWS
+export SegundosTempoEspera=20
+export DefaultConnection="User ID=torneSe;Password=1234;Host=postgres;Port=5432;Database=TorneSeDb;Pooling=true"
+export ElasticSearchLogs=http://elasticsearch:9200
+export MongoDbLogs=mongodb://mongo:27018/servico-notas-logs

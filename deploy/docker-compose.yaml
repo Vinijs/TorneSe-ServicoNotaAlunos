@@ -29,21 +29,25 @@ services:
     container_name: kibana-servico-notas
     ports:
       - 5601:5601
-    # environment:
-    #   ELASTICSEARCH_URL: http://elasticsearch:9200
-    #   ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
     networks: 
         - servico-notas
         
-  # postgres:
-  #   image: postgres
-  #   container_name: postgres-servico-notas
-  #   volumes:
-  #     - ./database:/var/lib/postgresql/data
-  #   ports:
-  #     - 5432:5432
-  #   networks:
-  #     - servico-notas
+  postgres:
+    image: postgres
+    container_name: postgres-servico-notas
+    volumes:
+      - /c/Users/Vinicius/Documents/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - servico-notas
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: torneSe
+      POSTGRES_DB: TorneSeDb
   
   mongo:
     image: mongo:latest
@@ -51,13 +55,27 @@ services:
     volumes:
       - ./database_mongo:/data/db
     ports:
-      - 27018:27017
+      - 27017:27017
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       - servico-notas
+   
+  worker-servico-notas:
+    image: tornese/servico-notas:latest
+    build: ../ .
+    container_name: servico-notas
+    networks:
+      - servico-notas
+    env_file:
+      - ../worker.env
+    depends_on:
+      - mongo
+      - postgres
+      - kibana
+      - elasticsearch
 
 networks:
   servico-notas:
