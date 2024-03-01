@@ -42,7 +42,7 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
                 .RegistrarContextoSqs()
                 .RegistrarHealthChecks()
                 .ConfigurarSerilog(configuration, hostEnvironment)
-                .ConfigurarHealthChecks(configuration);
+                .ConfigurarHealthChecks(configuration, hostEnvironment);
                 
             return services;
         }

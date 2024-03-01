@@ -21,7 +21,13 @@ public sealed class ProvedorVariaveisAmbiente : IProvedorVariaveisAmbiente
     public string ElasticSearchUrl => Get(VariaveisAmbienteConstants.ELASTIC_SEARCH_URL);
 
     public string DefaultConnection => Get(VariaveisAmbienteConstants.DEFAULT_CONNECTION);
+    public string ElasticCloudId => Get(VariaveisAmbienteConstants.ELASTIC_CLOUD_ID);
 
+    public string ElasticUser => Get(VariaveisAmbienteConstants.ELASTIC_USER);
+
+    public string ElasticPassword => Get(VariaveisAmbienteConstants.ELASTIC_PASSWORD);
+
+    public string PRD_ElasticSearchUrl => Get(VariaveisAmbienteConstants.PRD_ELASTIC_SEARCH_URL);
     public string Get(string name)
      => System.Environment.GetEnvironmentVariable(name);
 }

@@ -11,6 +11,10 @@ public interface IProvedorVariaveisAmbiente
     int AwsLongPooling { get; }
     string MongoDbUrl { get; }
     string ElasticSearchUrl { get; }
+    string PRD_ElasticSearchUrl { get; }
     string DefaultConnection { get; }
+    string ElasticCloudId { get; }
+    string ElasticUser { get; }
+    string ElasticPassword { get; }
     string Get(string nome);
 }

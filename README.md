@@ -58,13 +58,21 @@ A partir de uma solução criada digitamos o comando para adicionar a referênci
 - https://docs.microsoft.com/pt-br/dotnet/core/extensions/windows-service
 
 ## Passo a passo instalação local
-- dotnet publish --no-self-contained -o C:\Users\Vinicius\source\repos\publicacao
--p:PublishProfile=FolderProfile
+- dotnet publish --no-self-contained -o C:\Users\Vinicius\source\repos\publicacao -p:PublishProfile=FolderProfile
 - sc.exe create "Servico Integracao Notas" binpath="C:\Users\Vinicius\source\repos\publicacao\TorneSe.ServicoNotaAlunos.Worker.exe"
 - sc.exe failure "Servico Integracao Notas" reset=0 actions=restart/60000/restart/60000/run/1000
+- sc.exe start "Servico Integracao Notas"
 - sc.exe stop "Servico Integracao Notas"
 - sc.exe delete "Servico Integracao Notas"
 
 ## Criar imagem docker aplicação
 - docker build -t tornese/servico-notas:latest .
 - docker run -d --name servico-notas tornese/servico-notas
+
+## Criar conta no Atlas
+- https://account.mongodb.com/account/login?n=%2Fv2%2F5e8c9673dce91c238d9046bc%23clusters
+
+## Exemplo de conexão cluster mongo
+mongodb://:@ac-2fgps34-shard-00-00.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-01.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-02.1tdhbqq.mongodb.net:27017/<database_name>?ssl=true&replicaSet=atlas-6bk87u-shard-0&authSource=admin&retryWrites=true&w=majority
+
+https://worker-elastic.es.us-east-1.aws.found.io:9243
