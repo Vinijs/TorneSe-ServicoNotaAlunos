@@ -1,0 +1,9 @@
+version: "3"
+
+services:  
+ worker-servico-notas:
+    image: tornese/servico-notas:latest
+    build: ../ .
+    container_name: servico-notas
+    env_file:
+      - ../worker.env
