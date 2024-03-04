@@ -26,12 +26,14 @@ public static class HealthChecksExtensions
         .AddCheck<AwsSqsHealthCheck>("AwsSQS", tags: new string[] { "fila", "mensageria" });
 
         if (hostEnvironment.IsProduction())
-            healthCheckBuilder.AddElasticsearch(options =>
-            {
-                options.UseServer(provedorVariaveis.PRD_ElasticSearchUrl);
-                options.UseBasicAuthentication(provedorVariaveis.ElasticUser, provedorVariaveis.ElasticPassword);
-            }, name: "Elastic"
-            , tags: new string[] { "logs", "logs data" });
+            // healthCheckBuilder.AddElasticsearch(options =>
+            // {
+            //     options.UseServer(provedorVariaveis.PRD_ElasticSearchUrl);
+            //     options.UseBasicAuthentication(provedorVariaveis.ElasticUser, provedorVariaveis.ElasticPassword);
+            // }, name: "Elastic"
+            // , tags: new string[] { "logs", "logs data" });
+             healthCheckBuilder.AddElasticsearch(provedorVariaveis.PRD_ElasticSearchUrl, name: "Elastic"
+           , tags: new string[] { "logs", "logs data" });
         else
             healthCheckBuilder.AddElasticsearch(provedorVariaveis.ElasticSearchUrl, name: "Elastic"
            , tags: new string[] { "logs", "logs data" });

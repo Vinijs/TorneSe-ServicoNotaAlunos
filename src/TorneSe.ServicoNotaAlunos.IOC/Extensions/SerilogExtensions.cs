@@ -63,20 +63,28 @@ public static class SerilogExtensions
                                                                         IHostEnvironment hostEnvironment)
     {
         if (hostEnvironment.IsProduction())
-            return new ElasticsearchSinkOptions()
+            return new ElasticsearchSinkOptions(new Uri(ProvedorVariaveisAmbiente.Instancia.PRD_ElasticSearchUrl))
             {
                 MinimumLogEventLevel = LogEventLevel.Information,
-                //Importante o nome do index deve ser separado por - e somente letras minusculas para atender ao pattern
                 IndexFormat = $"{configuration["Application:ApplicationName"]}-logs-{hostEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.Now:yyyy-MM-dd}",
                 AutoRegisterTemplate = true,
                 NumberOfShards = 2,
                 NumberOfReplicas = 1,
-                ModifyConnectionSettings = conn =>
-                {
-                    var basicCredential = new BasicAuthenticationCredentials(ProvedorVariaveisAmbiente.Instancia.ElasticUser, ProvedorVariaveisAmbiente.Instancia.ElasticPassword);
-                    return new ConnectionConfiguration(ProvedorVariaveisAmbiente.Instancia.ElasticCloudId, basicCredential);
-                }
             };
+            // return new ElasticsearchSinkOptions()
+            // {
+            //     MinimumLogEventLevel = LogEventLevel.Information,
+            //     //Importante o nome do index deve ser separado por - e somente letras minusculas para atender ao pattern
+            //     IndexFormat = $"{configuration["Application:ApplicationName"]}-logs-{hostEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.Now:yyyy-MM-dd}",
+            //     AutoRegisterTemplate = true,
+            //     NumberOfShards = 2,
+            //     NumberOfReplicas = 1,
+            //     ModifyConnectionSettings = conn =>
+            //     {
+            //         var basicCredential = new BasicAuthenticationCredentials(ProvedorVariaveisAmbiente.Instancia.ElasticUser, ProvedorVariaveisAmbiente.Instancia.ElasticPassword);
+            //         return new ConnectionConfiguration(ProvedorVariaveisAmbiente.Instancia.ElasticCloudId, basicCredential);
+            //     }
+            // };
         else
             return new ElasticsearchSinkOptions(new Uri(ProvedorVariaveisAmbiente.Instancia.ElasticSearchUrl))
             {
