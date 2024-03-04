@@ -1,10 +1,11 @@
+using System.Runtime.InteropServices;
 using TorneSe.ServicoNotaAlunos.Worker;
 using TorneSe.ServicoNotaAlunos.IOC;
 using TorneSe.ServicoNotaAlunos.Data.Context;
 using TorneSe.ServicoNotaAlunos.Data.Environment;
 using Serilog;
 
-IHost host = Host.CreateDefaultBuilder(args)
+IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostContext, config) =>
     {
         config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath)
@@ -27,11 +28,18 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
         // .AddHostedService<WorkerExemplo>();
     })
-    .UseWindowsService(options =>
-    {
-        options.ServiceName = "Servico Integracao Notas";
-    })
-    .UseSerilog()
-    .Build();
+    .UseSerilog();
 
-host.Run();
+    if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+        hostBuilder.UseWindowsService(options =>
+        {
+            options.ServiceName = "Servico Integracao Notas";
+        });
+    }
+    else
+    {
+        hostBuilder.UseSystemd();
+    }
+    
+await hostBuilder..Build().RunAsync();

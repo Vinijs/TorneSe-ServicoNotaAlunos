@@ -76,3 +76,27 @@ A partir de uma solução criada digitamos o comando para adicionar a referênci
 mongodb://:@ac-2fgps34-shard-00-00.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-01.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-02.1tdhbqq.mongodb.net:27017/<database_name>?ssl=true&replicaSet=atlas-6bk87u-shard-0&authSource=admin&retryWrites=true&w=majority
 
 https://worker-elastic.es.us-east-1.aws.found.io:9243
+
+## Comandos após provisionar a maquina linux
+- sudo apt-get update
+- sudo apt-get upgrade -y
+- sudo apt-get install docker-compose -y
+- vim worker.env
+- docker build -t tornese/servico-notas:latest .
+
+## Executando background service .net linux
+- https://developpaper.com/build-cross-platform-net-core-background-service/
+- https://rafaelcruz.azurewebsites.net/2020/07/07/construindo-um-windows-service-ou-linux-daemon-com-worker-service-net-core-parte-2/
+
+## COmandos para baixar pacotes e instalar sdk .net
+- sudo wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+- sudo dpkg -i packages-microsoft-prod.deb
+- sudo rm packages-microsoft-prod.deb
+- SDK : sudo apt-get update;
+sudo apt-get install -y apt-transport-https &&
+sudo apt-get update &&
+sudo apt-get install -y dotnet-sdk-6.0
+- Runtime : sudo apt-get update;
+sudo apt-get install -y apt-transport-https &&
+sudo apt-get update &&
+sudo apt-get install -y aspnetcore-runtime-6.0
