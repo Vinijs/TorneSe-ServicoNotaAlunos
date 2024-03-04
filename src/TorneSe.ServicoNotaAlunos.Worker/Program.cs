@@ -42,4 +42,4 @@ IHostBuilder hostBuilder = Host.CreateDefaultBuilder(args)
         hostBuilder.UseSystemd();
     }
     
-await hostBuilder..Build().RunAsync();
+await hostBuilder.Build().RunAsync();
