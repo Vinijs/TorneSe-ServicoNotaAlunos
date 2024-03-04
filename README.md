@@ -100,6 +100,8 @@ sudo apt-get install -y dotnet-sdk-6.0
 sudo apt-get install -y apt-transport-https &&
 sudo apt-get update &&
 sudo apt-get install -y aspnetcore-runtime-6.0
+- dotnet build "src/TorneSe.ServicoNotaAlunos.Worker/TorneSe.ServicoNotaAlunos.Worker.csproj" -c Release -o /etc/systemd/system -r linux-x64 --no-self-contained
+- path = /root/app/build/TorneSe.ServicoNotaAlunos.Worker.dll
 
 ## Subir cluster elastic
 - sudo apt-get update

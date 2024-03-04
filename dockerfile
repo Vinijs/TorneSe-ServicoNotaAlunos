@@ -7,7 +7,7 @@ COPY . ./
 # Restore as distinct layers
 RUN dotnet restore "src/TorneSe.ServicoNotaAlunos.Worker/TorneSe.ServicoNotaAlunos.Worker.csproj"
 # Build and publish a release
-RUN dotnet build "src/TorneSe.ServicoNotaAlunos.Worker/TorneSe.ServicoNotaAlunos.Worker.csproj" -c Release -o /app/build -r linux-x64 --no-self-contained
+RUN dotnet build "src/TorneSe.ServicoNotaAlunos.Worker/TorneSe.ServicoNotaAlunos.Worker.csproj" -c Release -o /root/app/build -r linux-x64 --no-self-contained
 
 #Imagem runtime para executar a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
